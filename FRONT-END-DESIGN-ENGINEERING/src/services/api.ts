@@ -1,4 +1,5 @@
-const BASE_URL = "https://java-8ekc.onrender.com";
+const BASE_URL = "https://java-8ekc.onrender.com/api";
+
 
 const handleResponse = async (response: Response) => {
   if (!response.ok) {
