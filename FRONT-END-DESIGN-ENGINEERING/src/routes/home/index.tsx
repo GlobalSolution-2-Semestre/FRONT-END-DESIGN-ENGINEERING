@@ -1,6 +1,3 @@
-// Em: src/routes/home/index.tsx
-// (Substitua TODO o conteúdo do seu arquivo por este)
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 
