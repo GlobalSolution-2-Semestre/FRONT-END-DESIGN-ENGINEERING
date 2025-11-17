@@ -1,6 +1,4 @@
 import React from "react";
-
-// Importando as imagens dos integrantes
 import PedroFoto from "../../assets/integrantes/pedro.jpeg";
 import GuilhermeFoto from "../../assets/integrantes/macedo.jpeg";
 
