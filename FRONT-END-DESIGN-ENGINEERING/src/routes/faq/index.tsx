@@ -21,7 +21,7 @@ const faqData = [
 
 const Faq: React.FC = () => {
   return (
-    
+   
     <div className="rounded-lg bg-white p-8 shadow-sm dark:bg-gray-800">
       
       <h1 className="text-3xl font-bold mb-8 text-center text-gray-900 dark:text-white">
@@ -32,10 +32,9 @@ const Faq: React.FC = () => {
       <div className="max-w-3xl mx-auto space-y-6">
         
         {faqData.map((item, index) => (
-        
           <div 
             key={index} 
-            className="rounded-lg border border-gray-200 dark:border-gray-700 p-6"
+            className="rounded-lg border border-gray-200 dark:border-gray-700 p-6 shadow-sm"
           >
             <h2 className="text-xl font-semibold mb-3 text-gray-900 dark:text-white">
               {item.pergunta}

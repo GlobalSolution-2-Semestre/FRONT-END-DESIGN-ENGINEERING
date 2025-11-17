@@ -2,23 +2,26 @@ import React from 'react';
 
 const Sobre: React.FC = () => {
   return (
-    <div className="rounded-lg bg-white p-8 shadow-sm dark:bg-gray-800">
+    <div className="rounded-lg bg-white p-8 shadow-sm dark:bg-gray-800 max-w-4xl mx-auto">
       
-      <h1 className="text-3xl font-bold mb-4 text-gray-900 dark:text-white">
+      <h1 className="text-3xl font-bold mb-6 text-gray-900 dark:text-white">
         Sobre o Projeto
       </h1>
       
-      <p className="text-gray-700 leading-relaxed dark:text-gray-300">
+      <p className="text-lg text-gray-700 leading-relaxed dark:text-gray-300">
         Este projeto é a nossa proposta para a Global Solution 2025,
         focado no tema "O Futuro do Trabalho".
       </p>
       
-      <p className="text-gray-700 mt-4 leading-relaxed dark:text-gray-300">
-        Nossa solução é uma **"Ferramenta de monitoramento de bem-estar 
-        e saúde mental no trabalho"**, um dos temas sugeridos. 
-        O objetivo é usar a tecnologia para criar um ambiente de trabalho 
-        mais saudável, permitindo que as empresas identifiquem pontos de estresse 
-        e ofereçam suporte proativo aos seus colaboradores.
+      <p className="text-lg text-gray-700 mt-4 leading-relaxed dark:text-gray-300">
+        Nossa solução é uma{" "}
+        <strong className="font-semibold text-blue-600 dark:text-blue-400">
+          "Ferramenta de monitoramento de bem-estar e saúde mental no trabalho"
+        </strong>
+        [cite_start], um dos temas sugeridos[cite: 55]. O objetivo é usar a tecnologia para criar um 
+        ambiente de trabalho mais saudável, permitindo que as empresas 
+        identifiquem pontos de estresse e ofereçam suporte proativo aos 
+        seus colaboradores.
       </p>
     </div>
   );

@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 
 const Error: React.FC = () => {
   return (
-
     <div className="flex h-screen w-full flex-col items-center justify-center 
                     bg-gray-100 dark:bg-gray-900">
       
@@ -21,8 +20,9 @@ const Error: React.FC = () => {
       
       <Link 
         to="/" 
-        className="mt-8 rounded-md bg-blue-600 px-6 py-3 text-white font-medium 
-                   hover:bg-blue-700 dark:hover:bg-blue-500"
+        className="mt-8 rounded-lg bg-blue-600 px-6 py-3 text-white font-medium 
+                   hover:bg-blue-700 dark:hover:bg-blue-500 transition-colors
+                   focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
       >
         Voltar para a Home
       </Link>
