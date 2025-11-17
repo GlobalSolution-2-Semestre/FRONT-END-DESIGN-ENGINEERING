@@ -1,39 +1,54 @@
-import React from "react";
+import React from 'react';
 
-const FAQ: React.FC = () => {
-  const perguntas = [
-    {
-      q: "O que é o MindTrack?",
-      a: "É uma plataforma corporativa para monitoramento de bem-estar emocional e saúde mental de colaboradores."
-    },
-    {
-      q: "Como os dados são utilizados?",
-      a: "As informações servem para apoiar decisões de Recursos Humanos, identificar riscos de burnout e melhorar o clima organizacional."
-    },
-    {
-      q: "Os colaboradores têm privacidade?",
-      a: "Sim. Os dados são tratados de forma anônima ou restrita, seguindo as diretrizes da LGPD."
-    },
-    {
-      q: "O sistema envia alertas?",
-      a: "Sim, alertas automáticos podem ser gerados com base no humor, padrões de comportamento e relatórios dos colaboradores."
-    }
-  ];
+const faqData = [
+  {
+    pergunta: "Os dados dos funcionários são realmente anônimos?",
+    resposta: "Sim. O anonimato é o pilar da nossa plataforma. Os funcionários respondem aos check-ins de forma anônima. Os gestores e o RH veem apenas dados estatísticos consolidados (ex: '70% da Equipe X reportou bons níveis de energia'), sem nunca identificar a resposta individual."
+  },
+  {
+    pergunta: "Qual é o objetivo principal desta ferramenta?",
+    resposta: "O objetivo não é vigiar, mas sim apoiar. A ferramenta serve como um termômetro para a empresa entender, de forma macro, os níveis de estresse, sobrecarga e bem-estar. Com esses dados, a gestão pode tomar ações proativas, como ajustar cargas de trabalho ou oferecer novos benefícios de saúde mental."
+  },
+  {
+    pergunta: "Quem tem acesso aos relatórios e dados?",
+    resposta: "O acesso é restrito e baseado em permissões. Tipicamente, gestores de equipe têm acesso apenas aos dados consolidados do seu próprio time, enquanto o RH pode ter uma visão geral da empresa. Respostas individuais nunca são acessíveis."
+  },
+  {
+    pergunta: "A ferramenta oferece ajuda direta ao funcionário?",
+    resposta: "Sim. Além do monitoramento, a plataforma oferece uma biblioteca de recursos de apoio, como artigos, vídeos sobre gestão de estresse, meditação e links diretos para os canais de ajuda profissional (psicólogos, EAPs) oferecidos pela empresa."
+  }
+];
 
+const Faq: React.FC = () => {
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-200 p-10">
-      <h1 className="text-3xl font-bold mb-6">Perguntas Frequentes (FAQ)</h1>
-
-      <div className="space-y-4 max-w-3xl">
-        {perguntas.map((item, i) => (
-          <div key={i} className="p-4 border rounded-lg bg-gray-100 dark:bg-gray-800 dark:border-gray-700">
-            <h2 className="font-semibold">{item.q}</h2>
-            <p className="mt-2">{item.a}</p>
+    
+    <div className="rounded-lg bg-white p-8 shadow-sm dark:bg-gray-800">
+      
+      <h1 className="text-3xl font-bold mb-8 text-center text-gray-900 dark:text-white">
+        Perguntas Frequentes (FAQ)
+      </h1>
+      
+      {}
+      <div className="max-w-3xl mx-auto space-y-6">
+        
+        {faqData.map((item, index) => (
+        
+          <div 
+            key={index} 
+            className="rounded-lg border border-gray-200 dark:border-gray-700 p-6"
+          >
+            <h2 className="text-xl font-semibold mb-3 text-gray-900 dark:text-white">
+              {item.pergunta}
+            </h2>
+            <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
+              {item.resposta}
+            </p>
           </div>
         ))}
+
       </div>
     </div>
   );
 };
 
-export default FAQ;
+export default Faq;
