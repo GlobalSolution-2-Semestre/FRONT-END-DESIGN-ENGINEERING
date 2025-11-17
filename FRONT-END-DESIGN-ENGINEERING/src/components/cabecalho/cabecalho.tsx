@@ -1,33 +1,32 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom'; // Precisamos do Link para os links móveis
-import { Menu } from '../menu/menu'; // Este será nosso menu "Desktop"
+import { Link } from 'react-router-dom';
+import { Menu } from '../menu/menu'; 
 import { useTheme } from '../../contexts/useTheme'; 
 
 export const Cabecalho: React.FC = () => {
   const { theme, toggleTheme } = useTheme();
   
-  // 1. Estado para controlar o menu "hamburger"
+  
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  // Função para fechar o menu ao clicar em um link
   const handleLinkClick = () => {
     setIsMenuOpen(false);
   };
 
   return (
-    // Adicionamos 'relative' para posicionar o menu móvel
+   
     <header className="w-full bg-white p-5 shadow-md sticky top-0 z-50 
                      dark:bg-gray-800 dark:border-b dark:border-gray-700 relative">
       
-      {/* Container principal do cabeçalho */}
+      {}
       <div className="container mx-auto flex justify-between items-center">
         
-        {/* 2. Menu Desktop: escondido em telas pequenas ('md:flex') */}
+        {}
         <div className="hidden md:flex">
           <Menu /> 
         </div>
 
-        {/* 3. Logo/Home Link (para aparecer no mobile) */}
+        {}
         <div className="md:hidden">
           <Link 
             to="/" 

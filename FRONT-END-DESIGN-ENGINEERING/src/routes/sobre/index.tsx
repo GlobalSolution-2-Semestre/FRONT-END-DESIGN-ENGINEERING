@@ -18,7 +18,7 @@ const Sobre: React.FC = () => {
         <strong className="font-semibold text-blue-600 dark:text-blue-400">
           "Ferramenta de monitoramento de bem-estar e saúde mental no trabalho"
         </strong>
-        [cite_start], um dos temas sugeridos[cite: 55]. O objetivo é usar a tecnologia para criar um 
+        , um dos temas sugeridos. O objetivo é usar a tecnologia para criar um 
         ambiente de trabalho mais saudável, permitindo que as empresas 
         identifiquem pontos de estresse e ofereçam suporte proativo aos 
         seus colaboradores.
