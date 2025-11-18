@@ -14,7 +14,7 @@ interface Integrante {
 const membros: Integrante[] = [
   {
     nome: "Pedro Henrique Luiz Alves Duarte",
-    rm: "RM563405",
+    rm: "563405",
     turma: "1TDSPF",
     github: "https://github.com/pedrohenrique116",
     linkedin: "https://www.linkedin.com/in/pedro-henrique-luiz-alves-duarte-4645b128a/",
@@ -22,7 +22,7 @@ const membros: Integrante[] = [
   },
   {
     nome: "Guilherme Macedo Martins",
-    rm: "RM562396",
+    rm: "562396",
     turma: "1TDSPF",
     github: "https://github.com/GuilhermeMacedoMartins",
     linkedin: "https://www.linkedin.com/in/guilherme-macedo-b19979366/",
