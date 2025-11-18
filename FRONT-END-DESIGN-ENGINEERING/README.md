@@ -31,7 +31,7 @@ O **MindTrack** é uma plataforma corporativa desenvolvida para monitorar e prom
 Este repositório contém o **Front-end** da aplicação, desenvolvido como uma *Single Page Application* (SPA) responsiva, que consome uma API Java (Back-end) integrada a um banco de dados Oracle.
 
 **Link do Repositório:** [https://github.com/GlobalSolution-2-Semestre/FRONT-END-DESIGN-ENGINEERING.git]
-**Link do vídeo:** [LINK]
+**Link do vídeo:** [https://youtu.be/PW3GorhJWi8]
 
 ---
 
