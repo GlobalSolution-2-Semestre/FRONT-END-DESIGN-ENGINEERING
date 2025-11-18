@@ -1,6 +1,10 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 
+// Define TabType para tipagem correta
+type TabType = 'colaboradores' | 'checkins' | 'relatorios' | 'alertas';
+
+// --- TIPAGENS ---
 interface Colaborador {
   id?: number;
   nome: string;
@@ -8,35 +12,16 @@ interface Colaborador {
   cargo: string;
 }
 
-interface Checkin {
-  id?: number;
-  idColaborador: number;
-  dataRegistro?: string;
-  humor: string;
-  comentario: string;
-}
-
-interface Relatorio {
-  id?: number;
-  idColaborador: number;
-  mediaHumor: number;
-  resumoAnalise: string;
-  dataGeracao?: string;
-}
-
-interface Alerta {
-  id?: number;
-  idColaborador: number;
-  tipoAlerta: string;
-  descricao: string;
-  dataEnvio?: string;
-}
+interface Checkin { id?: number; idColaborador: number; dataRegistro?: string; humor: string; comentario: string; }
+interface Relatorio { id?: number; idColaborador: number; mediaHumor: number; resumoAnalise: string; dataGeracao?: string; }
+interface Alerta { id?: number; idColaborador: number; tipoAlerta: string; descricao: string; dataEnvio?: string; }
 
 const API_URL = "https://java-8ekc.onrender.com"; 
 
 export default function AdminGeral() {
-  const [activeTab, setActiveTab] = useState<'colaboradores' | 'checkins' | 'relatorios' | 'alertas'>('colaboradores');
+  const [activeTab, setActiveTab] = useState<TabType>('colaboradores');
   
+ 
   const [colaboradores, setColaboradores] = useState<Colaborador[]>([]);
   const [checkins, setCheckins] = useState<Checkin[]>([]);
   const [relatorios, setRelatorios] = useState<Relatorio[]>([]);
@@ -49,7 +34,12 @@ export default function AdminGeral() {
 
   const [editingId, setEditingId] = useState<number | null>(null);
 
-  const fetchData = () => {
+  const cancelEdit = () => {
+    setEditingId(null);
+    setFormColab({ nome: '', email: '', cargo: '' });
+  };
+  
+  const fetchData = useCallback(() => {
     let endpoint = '';
     if (activeTab === 'colaboradores') endpoint = '/colaborador';
     else if (activeTab === 'checkins') endpoint = '/checkin';
@@ -67,13 +57,15 @@ export default function AdminGeral() {
         else if (activeTab === 'relatorios') setRelatorios(data);
         else if (activeTab === 'alertas') setAlertas(data);
       })
-      .catch(error => console.error('Erro (GET):', error));
-  };
+      .catch(error => {
+        console.error('Erro (GET):', error);
+      });
+  }, [activeTab]);
 
   useEffect(() => {
     fetchData();
-    cancelEdit();
-  }, [activeTab]);
+
+  }, [fetchData]); 
 
   const handleEditColab = (colab: Colaborador) => {
     setFormColab(colab);
@@ -81,28 +73,23 @@ export default function AdminGeral() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const cancelEdit = () => {
-    setEditingId(null);
-    setFormColab({ nome: '', email: '', cargo: '' });
-  };
-
-  const handleSubmit = (e: React.FormEvent, type: 'colaborador' | 'checkin' | 'relatorio' | 'alerta') => {
+  const handleSubmit = (e: React.FormEvent, type: TabType) => {
     e.preventDefault();
     let endpoint = '';
-    let body: any = {};
+    let body: Record<string, unknown> = {}; 
     let method = 'POST';
 
-    if (type === 'colaborador') {
+    if (type === 'colaboradores') { 
       endpoint = '/colaborador';
-      body = formColab;
+      body = formColab as unknown as Record<string, unknown>;
       if (editingId) {
         method = 'PUT';
         body = { ...formColab, id: editingId };
       }
     } 
-    else if (type === 'checkin') { endpoint = '/checkin'; body = formCheckin; }
-    else if (type === 'relatorio') { endpoint = '/relatorio'; body = formRelatorio; }
-    else if (type === 'alerta') { endpoint = '/alerta'; body = formAlerta; }
+    else if (type === 'checkins') { endpoint = '/checkin'; body = formCheckin as unknown as Record<string, unknown>; }
+    else if (type === 'relatorios') { endpoint = '/relatorio'; body = formRelatorio as unknown as Record<string, unknown>; }
+    else if (type === 'alertas') { endpoint = '/alerta'; body = formAlerta as unknown as Record<string, unknown>; }
 
     fetch(API_URL + endpoint, {
       method: method, 
@@ -149,11 +136,16 @@ export default function AdminGeral() {
       <h1 className="text-2xl sm:text-3xl font-bold mb-6 sm:mb-8 text-center text-blue-700 dark:text-blue-400">
         Painel Administrativo Geral
       </h1>
+      
+    
       <div className="flex flex-wrap justify-center gap-2 mb-6 sm:mb-8 border-b border-gray-200 dark:border-gray-700 pb-4">
         {['colaboradores', 'checkins', 'relatorios', 'alertas'].map((tab) => (
           <button
             key={tab}
-            onClick={() => setActiveTab(tab as any)}
+            onClick={() => {
+              setActiveTab(tab as TabType);
+              cancelEdit(); 
+            }}
             className={`px-4 sm:px-6 py-2 rounded-full text-sm sm:text-base font-medium transition-all duration-200 ${
               activeTab === tab
                 ? 'bg-blue-600 text-white shadow-md transform scale-105'
@@ -166,6 +158,7 @@ export default function AdminGeral() {
       </div>
 
       <div className="bg-gray-50 dark:bg-gray-800 p-4 sm:p-6 rounded-lg border dark:border-gray-700">
+      
         {activeTab === 'colaboradores' && (
           <div>
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-2">
@@ -179,7 +172,7 @@ export default function AdminGeral() {
               )}
             </div>
 
-            <form onSubmit={(e) => handleSubmit(e, 'colaborador')} className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+            <form onSubmit={(e) => handleSubmit(e, 'colaboradores')} className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
               <input type="text" placeholder="Nome" required className="p-2 border rounded dark:bg-gray-700 dark:text-white w-full" 
                 value={formColab.nome} onChange={e => setFormColab({...formColab, nome: e.target.value})} />
               <input type="email" placeholder="Email" required className="p-2 border rounded dark:bg-gray-700 dark:text-white w-full" 
@@ -194,42 +187,45 @@ export default function AdminGeral() {
 
             <h3 className="text-xl font-bold mb-4 text-gray-800 dark:text-white">Colaboradores Cadastrados</h3>
             <div className="space-y-3">
-              {colaboradores.map(c => (
-                <div key={c.id} className="flex flex-col md:flex-row justify-between items-start md:items-center bg-white dark:bg-gray-700 p-4 rounded shadow-sm border-l-4 border-blue-500 gap-3">
-                  <div>
-                    <p className="font-bold text-gray-800 dark:text-white">{c.nome} <span className='text-xs text-gray-400'>#{c.id}</span></p>
-                    <p className="text-sm text-gray-600 dark:text-gray-300 break-all">{c.cargo} | {c.email}</p>
+              {colaboradores.length === 0 ? (
+                <p className="text-gray-500 dark:text-gray-400">Carregando...</p>
+              ) : (
+                colaboradores.map(c => (
+                  <div key={c.id} className="flex flex-col md:flex-row justify-between items-start md:items-center bg-white dark:bg-gray-700 p-4 rounded shadow-sm border-l-4 border-blue-500 gap-3">
+                    <div>
+                      <p className="font-bold text-gray-800 dark:text-white">{c.nome} <span className='text-xs text-gray-400'>#{c.id}</span></p>
+                      <p className="text-sm text-gray-600 dark:text-gray-300 break-all">{c.cargo} | {c.email}</p>
+                    </div>
+                    <div className="flex gap-2 self-end md:self-auto">
+                      <Link 
+                        to={`/admin/detalhes/${c.id}`}
+                        className="text-blue-600 hover:text-blue-800 font-bold px-3 py-1 border border-blue-600 rounded hover:bg-blue-50 dark:hover:bg-gray-600 transition-colors text-sm"
+                      >
+                        Ver
+                      </Link>
+                      <button 
+                        onClick={() => handleEditColab(c)} 
+                        className="text-yellow-600 hover:text-yellow-800 font-bold px-3 py-1 border border-yellow-600 rounded hover:bg-yellow-50 dark:hover:bg-gray-600 transition-colors text-sm"
+                      >
+                        Editar
+                      </button>
+                      <button 
+                        onClick={() => handleDelete(c.id, '/colaborador')} 
+                        className="text-red-500 hover:text-red-700 font-bold px-3 py-1 border border-red-500 rounded hover:bg-red-50 dark:hover:bg-gray-600 transition-colors text-sm"
+                      >
+                        Excluir
+                      </button>
+                    </div>
                   </div>
-                  <div className="flex gap-2 self-end md:self-auto">
-                    <Link 
-                      to={`/admin/detalhes/${c.id}`}
-                      className="text-blue-600 hover:text-blue-800 font-bold px-3 py-1 border border-blue-600 rounded hover:bg-blue-50 dark:hover:bg-gray-600 transition-colors text-sm"
-                    >
-                      Ver
-                    </Link>
-                    <button 
-                      onClick={() => handleEditColab(c)} 
-                      className="text-yellow-600 hover:text-yellow-800 font-bold px-3 py-1 border border-yellow-600 rounded hover:bg-yellow-50 dark:hover:bg-gray-600 transition-colors text-sm"
-                    >
-                      Editar
-                    </button>
-                    <button 
-                      onClick={() => handleDelete(c.id, '/colaborador')} 
-                      className="text-red-500 hover:text-red-700 font-bold px-3 py-1 border border-red-500 rounded hover:bg-red-50 dark:hover:bg-gray-600 transition-colors text-sm"
-                    >
-                      Excluir
-                    </button>
-                  </div>
-                </div>
-              ))}
+                ))
+              )}
             </div>
           </div>
         )}
-
         {activeTab === 'checkins' && (
           <div>
             <h3 className="text-xl font-bold mb-4 text-gray-800 dark:text-white">Novo Check-in</h3>
-            <form onSubmit={(e) => handleSubmit(e, 'checkin')} className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+            <form onSubmit={(e) => handleSubmit(e, 'checkins')} className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
               <input type="number" placeholder="ID Colaborador" required className="p-2 border rounded dark:bg-gray-700 dark:text-white w-full" 
                 value={formCheckin.idColaborador || ''} onChange={e => setFormCheckin({...formCheckin, idColaborador: +e.target.value})} />
               <select required className="p-2 border rounded dark:bg-gray-700 dark:text-white w-full" 
@@ -247,25 +243,28 @@ export default function AdminGeral() {
               <button type="submit" className="bg-green-600 text-white font-bold py-2 rounded hover:bg-green-700 w-full">Registrar</button>
             </form>
 
+            <h3 className="text-xl font-bold mb-4 text-gray-800 dark:text-white">Check-ins Cadastrados</h3>
             <div className="space-y-3">
-              {checkins.map(c => (
-                <div key={c.id} className="flex flex-col md:flex-row justify-between items-start md:items-center bg-white dark:bg-gray-700 p-4 rounded shadow-sm border-l-4 border-green-500 gap-2">
-                  <div>
-                    <p className="font-bold text-gray-800 dark:text-white">Humor: {c.humor}</p>
-                    <p className="text-sm text-gray-600 dark:text-gray-300">Colab ID: {c.idColaborador} - "{c.comentario}"</p>
+              {checkins.length === 0 ? (
+                <p className="text-gray-500 dark:text-gray-400">Carregando...</p>
+              ) : (
+                checkins.map(c => (
+                  <div key={c.id} className="flex flex-col md:flex-row justify-between items-start md:items-center bg-white dark:bg-gray-700 p-4 rounded shadow-sm border-l-4 border-green-500 gap-2">
+                    <div>
+                      <p className="font-bold text-gray-800 dark:text-white">Humor: {c.humor}</p>
+                      <p className="text-sm text-gray-600 dark:text-gray-300">Colab ID: {c.idColaborador} - "{c.comentario}"</p>
+                    </div>
+                    <button onClick={() => handleDelete(c.id, '/checkin')} className="text-red-500 hover:text-red-700 font-bold px-3 py-1 border border-red-500 rounded self-end md:self-auto text-sm">Excluir</button>
                   </div>
-                  <button onClick={() => handleDelete(c.id, '/checkin')} className="text-red-500 hover:text-red-700 font-bold px-3 py-1 border border-red-500 rounded self-end md:self-auto text-sm">Excluir</button>
-                </div>
-              ))}
+                ))
+              )}
             </div>
           </div>
         )}
-
-        {}
         {activeTab === 'relatorios' && (
           <div>
             <h3 className="text-xl font-bold mb-4 text-gray-800 dark:text-white">Novo Relatório</h3>
-            <form onSubmit={(e) => handleSubmit(e, 'relatorio')} className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+            <form onSubmit={(e) => handleSubmit(e, 'relatorios')} className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
               <input type="number" placeholder="ID Colaborador" required className="p-2 border rounded dark:bg-gray-700 dark:text-white w-full" 
                 value={formRelatorio.idColaborador || ''} onChange={e => setFormRelatorio({...formRelatorio, idColaborador: +e.target.value})} />
               <input type="number" step="0.1" placeholder="Média (0-10)" required className="p-2 border rounded dark:bg-gray-700 dark:text-white w-full" 
@@ -275,48 +274,59 @@ export default function AdminGeral() {
               <button type="submit" className="bg-green-600 text-white font-bold py-2 rounded hover:bg-green-700 w-full">Salvar</button>
             </form>
 
+            <h3 className="text-xl font-bold mb-4 text-gray-800 dark:text-white">Relatórios Cadastrados</h3>
             <div className="space-y-3">
-              {relatorios.map(r => (
-                <div key={r.id} className="flex flex-col md:flex-row justify-between items-start md:items-center bg-white dark:bg-gray-700 p-4 rounded shadow-sm border-l-4 border-purple-500 gap-2">
-                  <div>
-                    <p className="font-bold text-gray-800 dark:text-white">Média: {r.mediaHumor}</p>
-                    <p className="text-sm text-gray-600 dark:text-gray-300">Colab ID: {r.idColaborador} - {r.resumoAnalise}</p>
+              {relatorios.length === 0 ? (
+                <p className="text-gray-500 dark:text-gray-400">Carregando...</p>
+              ) : (
+                relatorios.map(r => (
+                  <div key={r.id} className="flex flex-col md:flex-row justify-between items-start md:items-center bg-white dark:bg-gray-700 p-4 rounded shadow-sm border-l-4 border-purple-500 gap-2">
+                    <div>
+                      <p className="font-bold text-gray-800 dark:text-white">Média: {r.mediaHumor}</p>
+                      <p className="text-sm text-gray-600 dark:text-gray-300">Colab ID: {r.idColaborador} - {r.resumoAnalise}</p>
+                    </div>
+                    <button onClick={() => handleDelete(r.id, '/relatorio')} className="text-red-500 hover:text-red-700 font-bold px-3 py-1 border border-red-500 rounded self-end md:self-auto text-sm">Excluir</button>
                   </div>
-                  <button onClick={() => handleDelete(r.id, '/relatorio')} className="text-red-500 hover:text-red-700 font-bold px-3 py-1 border border-red-500 rounded self-end md:self-auto text-sm">Excluir</button>
-                </div>
-              ))}
+                ))
+              )}
             </div>
           </div>
         )}
+
         {activeTab === 'alertas' && (
           <div>
             <h3 className="text-xl font-bold mb-4 text-gray-800 dark:text-white">Emitir Alerta</h3>
-            <form onSubmit={(e) => handleSubmit(e, 'alerta')} className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+            <form onSubmit={(e) => handleSubmit(e, 'alertas')} className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
               <input type="number" placeholder="ID Colaborador" required className="p-2 border rounded dark:bg-gray-700 dark:text-white w-full" 
                 value={formAlerta.idColaborador || ''} onChange={e => setFormAlerta({...formAlerta, idColaborador: +e.target.value})} />
               <select required className="p-2 border rounded dark:bg-gray-700 dark:text-white w-full" 
                 value={formAlerta.tipoAlerta} onChange={e => setFormAlerta({...formAlerta, tipoAlerta: e.target.value})}>
-                 <option value="">Tipo</option>
-                 <option value="Informativo">Informativo</option>
-                 <option value="Atenção">Atenção</option>
-                 <option value="Aviso">Aviso</option>
-                 <option value="Crítico">Crítico</option>
+                <option value="">Tipo</option>
+                <option value="Informativo">Informativo</option>
+                <option value="Atenção">Atenção</option>
+                <option value="Aviso">Aviso</option>
+                <option value="Crítico">Crítico</option>
               </select>
               <input type="text" placeholder="Descrição" required className="p-2 border rounded dark:bg-gray-700 dark:text-white w-full" 
                 value={formAlerta.descricao} onChange={e => setFormAlerta({...formAlerta, descricao: e.target.value})} />
               <button type="submit" className="bg-red-600 text-white font-bold py-2 rounded hover:bg-red-700 w-full">Emitir</button>
             </form>
 
+            <h3 className="text-xl font-bold mb-4 text-gray-800 dark:text-white">Alertas Cadastrados</h3>
             <div className="space-y-3">
-              {alertas.map(a => (
-                <div key={a.id} className="flex flex-col md:flex-row justify-between items-start md:items-center bg-white dark:bg-gray-700 p-4 rounded shadow-sm border-l-4 border-red-500 gap-2">
-                  <div>
-                    <p className="font-bold text-red-600 dark:text-red-400">{a.tipoAlerta}</p>
-                    <p className="text-sm text-gray-600 dark:text-gray-300">Colab ID: {a.idColaborador} - {a.descricao}</p>
+              {alertas.length === 0 ? (
+                <p className="text-gray-500 dark:text-gray-400">Carregando...</p>
+              ) : (
+                alertas.map(a => (
+                  <div key={a.id} className="flex flex-col md:flex-row justify-between items-start md:items-center bg-white dark:bg-gray-700 p-4 rounded shadow-sm border-l-4 border-red-500 gap-2">
+                    <div>
+                      <p className="font-bold text-red-600 dark:text-red-400">{a.tipoAlerta}</p>
+                      <p className="text-sm text-gray-600 dark:text-gray-300">Colab ID: {a.idColaborador} - {a.descricao}</p>
+                    </div>
+                    <button onClick={() => handleDelete(a.id, '/alerta')} className="text-red-500 hover:text-red-700 font-bold px-3 py-1 border border-red-500 rounded self-end md:self-auto text-sm">Excluir</button>
                   </div>
-                  <button onClick={() => handleDelete(a.id, '/alerta')} className="text-red-500 hover:text-red-700 font-bold px-3 py-1 border border-red-500 rounded self-end md:self-auto text-sm">Excluir</button>
-                </div>
-              ))}
+                ))
+              )}
             </div>
           </div>
         )}
