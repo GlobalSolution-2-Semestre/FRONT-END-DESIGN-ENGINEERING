@@ -113,7 +113,30 @@ Guilherme Macedo Martins         562396 1TDSPF
 © 2025 MindTrack Solutions - FIAP Global Solution
 
 
+## Contato
+Email:
+guilhermemacedo@mindtrack.com
+pedrohenrique@mindtrack.com
+
+
 
 ## Print
 
 <a href="https://ibb.co/Zzcrbhr5"><img src="https://i.ibb.co/SwVgZKgb/Captura-de-tela-2025-11-21-002204.png" alt="Captura-de-tela-2025-11-21-002204" border="0" /></a>
+
+<a href="https://ibb.co/R46TJQx5"><img src="https://i.ibb.co/bRv5GNSf/Captura-de-tela-2025-11-21-002907.png" alt="Captura-de-tela-2025-11-21-002907" border="0"></a>
+
+<a href="https://ibb.co/3mBM1hyt"><img src="https://i.ibb.co/k2Q9KcgY/image.png" alt="image" border="0"></a>
+
+<a href="https://ibb.co/PzVphR8C"><img src="https://i.ibb.co/tP1fsS5C/Captura-de-tela-2025-11-21-003103.png" alt="Captura-de-tela-2025-11-21-003103" border="0"></a>
+
+<a href="https://ibb.co/3yvZVKmv"><img src="https://i.ibb.co/1fMWBcGM/image.png" alt="image" border="0"></a>
+
+<a href="https://ibb.co/Df0dd8FX"><img src="https://i.ibb.co/PGqkk9yp/image.png" alt="image" border="0"></a>
+
+<a href="https://ibb.co/Kjp7FFtW"><img src="https://i.ibb.co/fYzt443H/image.png" alt="image" border="0"></a>
+
+<a href="https://ibb.co/TqJTk9NM"><img src="https://i.ibb.co/n840bxKM/Captura-de-tela-2025-11-21-003455.png" 
+alt="Captura-de-tela-2025-11-21-003455" border="0"></a>
+
+<a href="https://ibb.co/mVC5w2pN"><img src="https://i.ibb.co/HfDTsbZh/Captura-de-tela-2025-11-21-003551.png" alt="Captura-de-tela-2025-11-21-003551" border="0"></a>
