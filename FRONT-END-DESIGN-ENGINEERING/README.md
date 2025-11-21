@@ -6,7 +6,7 @@
 ---
 
 ## 🚧 Status do Projeto
-![Status](https://img.shields.io/badge/STATUS-EM_DESENVOLVIMENTO-yellow?style=for-the-badge)
+![Status](https://img.shields.io/badge/STATUS-CONCLUIDO-green?style=for-the-badge)
 
 ---
 
@@ -32,6 +32,7 @@ Este repositório contém o **Front-end** da aplicação, desenvolvido como uma 
 
 **Link do Repositório:** [https://github.com/GlobalSolution-2-Semestre/FRONT-END-DESIGN-ENGINEERING.git]
 **Link do vídeo:** [https://youtu.be/PW3GorhJWi8]
+**Link do Deploy:** [https://front-end-design-engineering-delta.vercel.app]
 
 ---
 
@@ -77,7 +78,7 @@ Pré-requisitos: Ter o [Node.js](https://nodejs.org/) e o [Git](https://git-scm.
 
 ### Acesso Online (Deploy)
 > **Acesse a aplicação rodando na Vercel:**
-> [https://mindtrack-seugrupo.vercel.app](https://mindtrack-seugrupo.vercel.app) *(Substitua pelo seu link real da Vercel)*
+> https://front-end-design-engineering-delta.vercel.app
 
 ### Funcionalidades
 1.  **Navegação:** Utilize o menu superior para acessar as páginas Home, Sobre, Integrantes e Admin.
@@ -102,10 +103,17 @@ src/
 ├── App.tsx          # Configuração principal de Rotas e Layout
 ├── main.tsx         # Ponto de entrada da aplicação
 └── index.css        # Configuração do Tailwind
+```
 
-👥 Autores e Créditos
+## 👥 Autores e Créditos
 Integrantes:
 Pedro Henrique Luiz Alves Duarte 563405 1TDSPF
 Guilherme Macedo Martins         562396 1TDSPF
 
 © 2025 MindTrack Solutions - FIAP Global Solution
+
+
+
+## Print
+
+<a href="https://ibb.co/Zzcrbhr5"><img src="https://i.ibb.co/SwVgZKgb/Captura-de-tela-2025-11-21-002204.png" alt="Captura-de-tela-2025-11-21-002204" border="0" /></a>
